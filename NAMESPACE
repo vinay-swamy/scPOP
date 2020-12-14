@@ -1,1 +1,4 @@
 exportPattern("^[[:alpha:]]+")
+useDynLib(scPOP, .registration=TRUE)
+importFrom(Rcpp, evalCpp)
+exportPattern("^[[:alpha:]]+")

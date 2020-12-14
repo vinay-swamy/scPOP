@@ -1,7 +1,7 @@
 Package: scPOP
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
+Title: Metric for Benchmarking scRNA-seq
+Version: 0.0.1
 Author: Who wrote it
 Maintainer: The package maintainer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
@@ -9,3 +9,6 @@ Description: More about what it does (maybe more than one line)
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Imports: Rcpp (>= 1.0.5)
+LinkingTo: Rcpp, RcppArmadillo
+RoxygenNote: 7.1.1
