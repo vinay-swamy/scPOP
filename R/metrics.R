@@ -231,14 +231,11 @@ nmi <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
 #' @description
 #'     Determine batch/bio effect using the silhouette
 #'     coefficient (adopted from scone):
-#' @param pca.data a list as created by \code{prcomp},
-#'     \code{batch_sil.R} needs \code{$x}:
-#'     the principal components (PCs,
-#'     correctly: the rotated data)
+#' @param pca.data a matrix of reduced dimensions
 #' @param batch vector with the batch
 #'     covariate (for each cell)
-#' @param nPCs the number of principal components
-#'     to use (default: 3)
+#' @param nPCs the number of dimensions to use
+#'     to use (default: all)
 #' @return
 #'     The average silhouette width for all clusters.
 #'     For batch effect, the smaller the better.
@@ -252,14 +249,15 @@ nmi <- function(c1, c2, variant = c("max", "min", "sqrt", "sum", "joint")) {
 #' @importFrom cluster silhouette
 #' @importFrom stats dist
 #' @export
-silhouette_width <- function(pca.data, batch, nPCs = 3){
+silhouette_width <- function(pca.data, batch, nPCs = NULL){
     # in scone, they use svd to compute principal components.
     # For now, we'll keep the PCA object created in
     # prcomp to be consistent
     # proj <- svd(scale(t(expr),center = TRUE,scale = TRUE),
     #             nu = 3, nv =0)$u
+    if(is.null(nPCs)) nPCs <- ncol(pca.data)
 
-    dd <- as.matrix(dist(pca.data$x[, seq_len(nPCs)]))
-    summary(silhouette(as.numeric(batch), dd))$avg.width
+    dd <- as.matrix(dist(pca.data[, seq_len(nPCs)]))
+    summary(cluster::silhouette(as.numeric(batch), dd))$avg.width
 }
 
