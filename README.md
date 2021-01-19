@@ -1,5 +1,3 @@
-R Notebook
-================
 
 # scPOP
 
