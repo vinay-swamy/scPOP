@@ -10,5 +10,12 @@
 #' @param perplexity The effective number of neighbors around each cell.
 #' @param tol Stop when the score converges to this tolerance.
 #' @export
-NULL
+compute_simpson_index <- function(D, knn_idx, batch_labels, n_batches, perplexity = 15, tol = 1e-5) {
+    .Call(`_scPOP_compute_simpson_index`, D, knn_idx, batch_labels, n_batches, perplexity, tol)
+}
+
+#' @export
+countPairs <- function(classi1, classi2, order) {
+    .Call(`_scPOP_countPairs`, classi1, classi2, order)
+}
 
