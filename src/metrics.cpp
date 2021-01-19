@@ -25,6 +25,7 @@ float Hbeta(arma::mat& D, float beta, arma::vec& P, int idx) {
 //' @param perplexity The effective number of neighbors around each cell.
 //' @param tol Stop when the score converges to this tolerance.
 //' @export
+// [[Rcpp::export]]
 arma::vec compute_simpson_index(
         arma::mat& D,
         arma::umat& knn_idx,
@@ -80,7 +81,8 @@ arma::vec compute_simpson_index(
     }
     return(simpson);
 }
-
+//' @export
+// [[Rcpp::export]]
 List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order) {
     // first path to count pairs
     int n = classi1.size();
