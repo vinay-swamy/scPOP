@@ -257,7 +257,7 @@ silhouette_width <- function(pca.data, batch, nPCs = NULL){
     #             nu = 3, nv =0)$u
     if(is.null(nPCs)) nPCs <- ncol(pca.data)
 
-    dd <- as.matrix(dist(pca.data[, seq_len(nPCs)]))
+    dd <- dist(pca.data[, seq_len(nPCs)])
     summary(cluster::silhouette(as.numeric(batch), dd))$avg.width
 }
 
