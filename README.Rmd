@@ -35,7 +35,7 @@ We recommend the `zellkonverter` for reading .h5ad formatted into R. The example
 
 ```{r}
 library(zellkonverter,quietly = T)
-library(SingleCellExperiment)
+library(SingleCellExperiment,quietly = T)
 library(scPOP)
 sce <- zellkonverter::readH5AD('scEiaD_all_anndata_mini_ref.h5ad')
 sce
@@ -100,7 +100,7 @@ Lisi requires about 10gb of memory for 100K cells and scales linearly with numbe
 
 ```{r}
 lisi_score <- lisi(X = reducedDim(sce, 'X_scvi'), meta_data = as.data.frame(colData(sce)), label_colnames = 'CellType_predict' )
-lisi_score
+head(lisi_score)
 ```
 
 For some the `silhoette_width`, a distance matrix mist be calculated, which requires significant memory usage. We provide the function `stratified_sample` to downsample data based on a grouping variable 
