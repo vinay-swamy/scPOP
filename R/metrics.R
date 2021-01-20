@@ -261,10 +261,18 @@ silhouette_width <- function(reduction, meta.data, keys){
 calc_sumZscore <- function(df, batch_key){
     id <- df[,1]
     df <- df[,-1]
-    negative_cases <- df[,grepl(batch_key, colnames(df))]
-    positive_cases <- df[,!grepl(batch_key, colnames(df))]
-    nc_scaled <- apply(negative_cases, 2, scale) * -1
-    pc_scaled <- apply(positive_cases, 2, scale)
+    batch_cols <- colnames(df)[grepl(batch_key, colnames(df))]
+    label_cols <- colnames(df)[!grepl(batch_key, colnames(df))]
+    negative_cases <- c(  batch_cols[grepl('silWidth', batch_cols)],
+                          label_cols[grepl('lisi', label_cols)]
+        )
+    positive_cases <- c(  batch_cols[!grepl('silWidth', batch_cols)],
+                          label_cols[!grepl('lisi', label_cols)]
+    )
+    nc_scaled <- apply(df[,negative_cases], 2, scale) * -1
+    pc_scaled <- apply(df[,positive_cases], 2, scale)
+    pc_scaled[is.nan(nc_scaled)] <- 0
+    nc_scaled[is.nan(nc_scaled)] <- 0
     sumZ <- rowSums(cbind(pc_scaled, nc_scaled))
     return(sumZ)
 }
