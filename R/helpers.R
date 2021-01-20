@@ -71,9 +71,9 @@ run_all_metrics <- function(reduction, metadata, batch_key, label1_key, label2_k
     nmi_label <- nmi(metadata[[label1_key]], metadata[[label2_key]])
     qmessage('Done',quietly)
     scores <- data.frame(run=run_name,
-               ari_batch= ari_batch,
+               #ari_batch= ari_batch,
                ari_label= ari_label,
-               nmi_batch= nmi_batch,
+               #nmi_batch= nmi_batch,
                nmi_label= nmi_label)
     scores <- do.call(cbind, list( scores, lisi, sw) )
     return(scores)
