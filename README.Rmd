@@ -4,43 +4,114 @@ output: github_document
 
 # scPOP
 
-scPOP is a lightweight, low dependency R package which brings together multiple metrics to evaluate batch correction for single cell RNA-seq. The package includes the Local Simpson Index (LISI) and Average Silhouette Width (ASW) metrics from Harmony and kBET, respectively, as well as the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) algorithms.
+`scPOP` is a lightweight, low dependency R package which brings together multiple metrics to evaluate batch correction for single cell RNA-seq. 
+The package includes the Local Simpson Index (LISI) and Average Silhouette Width (ASW) metrics from Harmony and kBET, respectively, as well as the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) algorithms.
 
+# Metrics
+The metrics we include are :
+
+- Adjusted Rand Index(ARI): The amount of overlap between two sets of labels.
+- Normalized Mutual Information: The amount of overlap between two sets of labels.
+- Silhouette Width: Average difference between within label distance and nearest label distance. This requires calculation of distance matrix, which does not scale well with larger samplesizes. We provide methods for easily subsampling data within `scPOP`
+- Local Inverse Simpson Index (LISI): (avg) Number of labels present in the N nearest cells 
+
+It's important to note that based on the type of label being evaluated, the "optimal" score a given metric may change. For example, when calculating LISI based on batch, a highscore is better(multiple batches close together), but when calculating based on Cell Type, a low score is better( the same celltypes are close together.)
 
 # Usage
-
+The ideal use case for `scPOP` to generate metrics on dataset for which multiple rounds of batch correction have been calculated. These metrics can be used to rank different 
 
 We provide a toy dataset in .h5ad format
-```{r, echo=FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 download.file('https://hpc.nih.gov/~mcgaugheyd/scEiaD/colab/scEiaD_all_anndata_mini_ref.h5ad', 'scEiaD_all_anndata_mini_ref.h5ad')
 ```
 
-## Bioconductor framework example
 
-For some metric, a distance matrix mist be calculated, which requires significant memory usage. we provide the function `stratified_sample` to downsample data based on a grouping variable 
+We recommend calculating all metrics at once using `run_all_metrics`. This function requrires a matrix of reduced dimensions, a data.frame containing metadata, and the names of 3 columns
+- batch_key: column corresponds to batch for each cell
+- label1_key: primary label for each cell, ie Cell Type
+- secondary label for each cell, ie Cluster
+
+We recommend the `zellkonverter` for reading .h5ad formatted into R. The example we provide uses data in the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) format, but as scPOP only requires vectors of labels and matrices of reduced dimensions, data from other frameworks like [Seurat](https://satijalab.org/seurat/) can be easily used.
 
 ```{r}
 library(zellkonverter,quietly = T)
 library(SingleCellExperiment)
 library(scPOP)
 sce <- zellkonverter::readH5AD('scEiaD_all_anndata_mini_ref.h5ad')
-idx <- stratified_sample(colnames(sce), sce$batch)
-sce_ds <- sce[,idx]
-sil_score <- silhouette_width(reducedDim(sce_ds, 'X_scvi'), sce_ds$batch)
-
+sce
 ```
 
-Both the NMI and ARI metrics compare sets of labels, and thus can scale well to large data sets
+Running scPOP
+
+```{r}
+metrics <-run_all_metrics(reduction = reducedDim(sce, 'X_scvi'), 
+                          metadata = colData(sce),
+                          batch_key = 'batch',
+                          label1_key = 'CellType_predict',
+                          label2_key = 'cluster', 
+                          run_name = 'example')
+metrics
+```
+
+These metrics can be applied to multiple integration runs to determine the optimal integration method/parameters. To illustrate this, we'll generate some fake data. 
+
+```{r}
+multi_run_example <-  lapply(c(23232, 23423423, 66774, 2341345, 56733), function(i){
+    set.seed(i)
+    sce_shuffled <- sce
+    sce_shuffled$batch <- sample(sce_shuffled$batch, ncol(sce))
+    sce_shuffled$CellType_predict <- sample(sce_shuffled$CellType_predict, ncol(sce))
+    sce_shuffled$cluster <- sample(sce_shuffled$cluster, ncol(sce))
+    run_all_metrics(reduction = reducedDim(sce_shuffled, 'X_scvi'), 
+                  metadata = colData(sce_shuffled),
+                  batch_key = 'batch',
+                  label1_key = 'CellType_predict',
+                  label2_key = 'cluster', 
+                  run_name = as.character(i), 
+                  sil_width_prop = .25, 
+                  sil_width_group_key = 'CellType_predict', 
+                  quietly=T)
+    
+})
+
+run_metrics <-  do.call(rbind,  multi_run_example)
+run_metrics
+```
+
+We provide a method, `calc_sumZscore`, to aggregate these metrics together across multiple runs to generate a single score for each run
+
+```{r}
+run_metrics$sumZscore <-  calc_sumZscore(run_metrics, 'batch')
+run_metrics[,c('run', 'sumZscore')]
+```
+
+We also provide functions for running each function individually 
 
 ```{r}
 ari_score <- ari(sce$batch, sce$CellType_predict)
+ari_score
+```
+```{r}
 nmi_score <- nmi(sce$batch, sce$CellType_predict)
+nmi_score
 ```
 
 Lisi requires about 10gb of memory for 100K cells and scales linearly with number of cells 
 
 ```{r}
 lisi_score <- lisi(X = reducedDim(sce, 'X_scvi'), meta_data = as.data.frame(colData(sce)), label_colnames = 'CellType_predict' )
+lisi_score
+```
+
+For some the `silhoette_width`, a distance matrix mist be calculated, which requires significant memory usage. We provide the function `stratified_sample` to downsample data based on a grouping variable 
+
+```{r}
+idx <- stratified_sample(colnames(sce), sce$batch)
+sce_ds <- sce[,idx]
+sil_score <- silhouette_width(reduction = reducedDim(sce_ds, 'X_scvi'), 
+                              meta.data = colData(sce_ds),  
+                              keys ='CellType_predict')
+
 ```
 
 
