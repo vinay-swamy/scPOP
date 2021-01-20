@@ -4,19 +4,15 @@
 \alias{silhouette_width}
 \title{batch_sil}
 \usage{
-silhouette_width(pca.data, batch, nPCs = 3)
+silhouette_width(reduction, meta.data, keys)
 }
 \arguments{
-\item{pca.data}{a list as created by \code{prcomp},
-\code{batch_sil.R} needs \code{$x}:
-the principal components (PCs,
-correctly: the rotated data)}
+\item{reduction}{a matrix of reduced dimensions}
 
-\item{batch}{vector with the batch
-covariate (for each cell)}
+\item{meta.data}{dataframe with meta.data associated with reduction}
 
-\item{nPCs}{the number of principal components
-to use (default: 3)}
+\item{keys}{columns in meta.data to calculate silhoette for
+to use (default: all)}
 }
 \value{
 The average silhouette width for all clusters.
@@ -26,11 +22,4 @@ The average silhouette width for all clusters.
 \description{
 Determine batch/bio effect using the silhouette
     coefficient (adopted from scone):
-}
-\examples{
-    testdata <- create_testset_multibatch(n.genes=1000,
-                  n.batch=3, plattform='any')
-    pca.data <- prcomp(testdata$data, center=TRUE)
-    batch.silhouette <- batch_sil(pca.data, testdata$batch)
-
 }
