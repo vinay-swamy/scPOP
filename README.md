@@ -16,9 +16,10 @@ Install with the following:
     devtools::install_github('vinay-swamy/scPOP')
 
 Note that to install this package, you may require additional software
-to compile Rcpp code: - [xcode
-CLI](https://www.youtube.com/watch?v=Z01lzHNrSdU) for MacOS -
-[Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows
+to compile Rcpp code:
+
+-   [xcode CLI](https://www.youtube.com/watch?v=Z01lzHNrSdU) for MacOS
+-   [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows
 
 # Metrics
 
@@ -54,10 +55,12 @@ download.file('https://hpc.nih.gov/~mcgaugheyd/scEiaD/colab/scEiaD_all_anndata_m
 ```
 
 We recommend calculating all metrics at once using `run_all_metrics`.
-This function requrires a matrix of reduced dimensions, a data.frame
-containing metadata, and the names of 3 columns - batch\_key: column
-corresponds to batch for each cell - label1\_key: primary label for each
-cell, ie Cell Type - secondary label for each cell, ie Cluster
+This function requires a matrix of reduced dimensions, a data.frame
+containing metadata, and the names of 3 columns
+
+-   `batch_key`: column corresponds to batch for each cell
+-   `label1_key`: primary label for each cell, ie Cell Type
+-   `secondary_label`: for each cell, ie Cluster
 
 We recommend the `zellkonverter` for reading .h5ad formatted into R. The
 example we provide uses data in the
