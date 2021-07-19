@@ -8,6 +8,18 @@ Silhouette Width (ASW) metrics from Harmony and kBET, respectively, as
 well as the Adjusted Rand Index (ARI) and Normalized Mutual Information
 (NMI) algorithms.
 
+# Installation
+
+Install with the following:
+
+    library(devtools)
+    devtools::install_github('vinay-swamy/scPOP')
+
+Note that to install this package, you may require additional software
+to compile Rcpp code: - [xcode
+CLI](https://www.youtube.com/watch?v=Z01lzHNrSdU) for MacOS -
+[Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows
+
 # Metrics
 
 The metrics we include are :
@@ -198,7 +210,7 @@ head(lisi_score)
     ## GACGTTATCGGTCCGA_ERS2852885         1.000000
     ## TGCGCAGGTACCAGTT_ERS2852885         1.000000
 
-For some the `silhoette_width`, a distance matrix mist be calculated,
+For some the `silhouette_width`, a distance matrix mist be calculated,
 which requires significant memory usage. We provide the function
 `stratified_sample` to downsample data based on a grouping variable
 

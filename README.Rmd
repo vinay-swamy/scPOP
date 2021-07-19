@@ -7,6 +7,21 @@ output: github_document
 `scPOP` is a lightweight, low dependency R package which brings together multiple metrics to evaluate batch correction for single cell RNA-seq. 
 The package includes the Local Simpson Index (LISI) and Average Silhouette Width (ASW) metrics from Harmony and kBET, respectively, as well as the Adjusted Rand Index (ARI) and Normalized Mutual Information (NMI) algorithms.
 
+# Installation
+
+Install with the following:
+
+```
+library(devtools)
+devtools::install_github('vinay-swamy/scPOP')
+```
+
+Note that to install this package, you may require additional software to compile Rcpp code:
+- [xcode CLI](https://www.youtube.com/watch?v=Z01lzHNrSdU) for MacOS
+- [Rtools](https://cran.r-project.org/bin/windows/Rtools/) for Windows 
+
+
+
 # Metrics
 The metrics we include are :
 
@@ -21,7 +36,7 @@ It's important to note that based on the type of label being evaluated, the "opt
 The ideal use case for `scPOP` to generate metrics on dataset for which multiple rounds of batch correction have been calculated. These metrics can be used to rank different 
 
 We provide a toy dataset in .h5ad format
-```{r, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE, eval=F}
 download.file('https://hpc.nih.gov/~mcgaugheyd/scEiaD/colab/scEiaD_all_anndata_mini_ref.h5ad', 'scEiaD_all_anndata_mini_ref.h5ad')
 ```
 
@@ -33,7 +48,7 @@ We recommend calculating all metrics at once using `run_all_metrics`. This funct
 
 We recommend the `zellkonverter` for reading .h5ad formatted into R. The example we provide uses data in the [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/vignettes/SingleCellExperiment/inst/doc/intro.html) format, but as scPOP only requires vectors of labels and matrices of reduced dimensions, data from other frameworks like [Seurat](https://satijalab.org/seurat/) can be easily used.
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 library(zellkonverter,quietly = T)
 library(SingleCellExperiment,quietly = T)
 library(scPOP)
@@ -103,7 +118,7 @@ lisi_score <- lisi(X = reducedDim(sce, 'X_scvi'), meta_data = as.data.frame(colD
 head(lisi_score)
 ```
 
-For some the `silhoette_width`, a distance matrix mist be calculated, which requires significant memory usage. We provide the function `stratified_sample` to downsample data based on a grouping variable 
+For some the `silhouette_width`, a distance matrix mist be calculated, which requires significant memory usage. We provide the function `stratified_sample` to downsample data based on a grouping variable 
 
 ```{r}
 idx <- stratified_sample(colnames(sce), sce$batch)
