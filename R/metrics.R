@@ -18,6 +18,7 @@
 #' @examples
 #'
 #' ## Example with 400 cells.
+#' \dontrun{
 #' library(lisi)
 #' library(dplyr)
 #' library(tidyr)
@@ -47,7 +48,7 @@
 #'   ggplot(aes(X1, X2, color = lisi_value)) +
 #'     geom_point(shape = 21) +
 #'     facet_wrap(~key)
-#'
+#' }
 lisi <- function(
     X, meta_data, label_colnames, perplexity = 30, nn_eps = 0
 ) {

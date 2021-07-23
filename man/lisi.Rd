@@ -28,6 +28,7 @@ Use this function to compute LISI scores of one or more labels.
 \examples{
 
 ## Example with 400 cells.
+\dontrun{
 library(lisi)
 library(dplyr)
 library(tidyr)
@@ -57,5 +58,5 @@ lisi::X \%>\%
   ggplot(aes(X1, X2, color = lisi_value)) +
     geom_point(shape = 21) +
     facet_wrap(~key)
-
+}
 }
