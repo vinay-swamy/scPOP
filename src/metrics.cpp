@@ -2,10 +2,10 @@
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
 
-float Hbeta(arma::mat& D, float beta, arma::vec& P, int idx) {
+double Hbeta(arma::mat& D, double beta, arma::vec& P, int idx) {
     P = arma::exp(-D.col(idx) * beta);
-    float sumP = sum(P);
-    float H;
+    double sumP = sum(P);
+    double H;
     if (sumP == 0){
         H = 0;
         P = D.col(idx) * 0;
@@ -31,15 +31,15 @@ arma::vec compute_simpson_index(
         arma::umat& knn_idx,
         arma::vec& batch_labels,
         int n_batches,
-        float perplexity = 15,
-        float tol = 1e-5
+        double perplexity = 15,
+        double tol = 1e-5
 ) {
     int n = D.n_cols;
     arma::vec P = arma::zeros<arma::vec>(D.n_rows);
     arma::vec simpson = arma::zeros<arma::vec>(n);
-    float logU = log(perplexity);
+    double logU = log(perplexity);
 
-    float beta, betamin, betamax, H, Hdiff;
+    double beta, betamin, betamax, H, Hdiff;
     int tries;
     for (int i = 0; i < n ; i++) {
         beta = 1;
@@ -74,7 +74,7 @@ arma::vec compute_simpson_index(
         for (int b = 0; b < n_batches; b++) {
             arma::uvec q = find(batch_labels.elem(knn_idx.col(i)) == b); // indices of cells belonging to batch (b)
             if (q.n_elem > 0) {
-                float sumP = sum(P.elem(q));
+                double sumP = sum(P.elem(q));
                 simpson.row(i) += sumP * sumP;
             }
         }
@@ -161,7 +161,7 @@ double expected_MI(IntegerVector ni_, IntegerVector n_j) {
 
             for (int nij = start_nij; nij <= end_nij; nij++ ) {
 
-                double t1 = ((float) nij / (float) N) * std::log((float)(nij * N) / (float)(ni_[i]*n_j[j])) ;
+                double t1 = ((double) nij / (double) N) * std::log((double)(nij * N) / (double)(ni_[i]*n_j[j])) ;
 
                 double t2 = std::exp((ni_f[i] + nj_f[j] + Nmni_f[i] + Nmnj_f[j] - N_f - lgamma(1 + nij) - lgamma(1 + ni_[i] - nij) - lgamma(1 + n_j[j] - nij) - lgamma(1 + N - ni_[i] - n_j[j] + nij))) ;
 
