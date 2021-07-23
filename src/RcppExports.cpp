@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // compute_simpson_index
-arma::vec compute_simpson_index(arma::mat& D, arma::umat& knn_idx, arma::vec& batch_labels, int n_batches, double perplexity, double tol);
+arma::vec compute_simpson_index(arma::mat& D, arma::umat& knn_idx, arma::vec& batch_labels, int n_batches, float perplexity, float tol);
 RcppExport SEXP _scPOP_compute_simpson_index(SEXP DSEXP, SEXP knn_idxSEXP, SEXP batch_labelsSEXP, SEXP n_batchesSEXP, SEXP perplexitySEXP, SEXP tolSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
@@ -16,8 +16,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::umat& >::type knn_idx(knn_idxSEXP);
     Rcpp::traits::input_parameter< arma::vec& >::type batch_labels(batch_labelsSEXP);
     Rcpp::traits::input_parameter< int >::type n_batches(n_batchesSEXP);
-    Rcpp::traits::input_parameter< double >::type perplexity(perplexitySEXP);
-    Rcpp::traits::input_parameter< double >::type tol(tolSEXP);
+    Rcpp::traits::input_parameter< float >::type perplexity(perplexitySEXP);
+    Rcpp::traits::input_parameter< float >::type tol(tolSEXP);
     rcpp_result_gen = Rcpp::wrap(compute_simpson_index(D, knn_idx, batch_labels, n_batches, perplexity, tol));
     return rcpp_result_gen;
 END_RCPP
