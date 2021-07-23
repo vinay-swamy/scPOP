@@ -27,11 +27,13 @@ run_all_metrics(
 
 \item{label2_key}{Name of column in metadata corresponding to secondary cell label, eg cluster identity}
 
+\item{run_name}{(optional) name to refer to dataset}
+
 \item{sil_width_prop}{(optinal) proportion of data to use for silhoette width}
 
 \item{sil_width_group_key}{(optinal) which column in metadata to use for stratified sampling of data}
 
-\item{sil}{(optional) Name associated with this data.}
+\item{quietly}{(optional) if TRUE dont print anything}
 }
 \value{
 A subsampled vector generated from indexer

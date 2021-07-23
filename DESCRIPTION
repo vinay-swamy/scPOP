@@ -1,11 +1,11 @@
 Package: scPOP
 Type: Package
 Title: Metric for Benchmarking scRNA-seq
-Version: 0.0.1
+Version: 0.1.0
 Author: Vinay Swamy, David McGaughey
 Maintainer: Vinay Swamy <swamyvinny@gmail.com>
-Description: Use metrics in scPOP to evaluate the effectiveness of batch correction methods
-License: MIT
+Description: Use metrics in scPOP to evaluate the effectiveness of batch correction methods.
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 

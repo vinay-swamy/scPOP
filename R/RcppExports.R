@@ -14,6 +14,10 @@ compute_simpson_index <- function(D, knn_idx, batch_labels, n_batches, perplexit
     .Call(`_scPOP_compute_simpson_index`, D, knn_idx, batch_labels, n_batches, perplexity, tol)
 }
 
+#' Count pairs in vectors
+#' @param classi1 first vector to compare
+#' @param classi2 second vector to compare
+#' @param order proper order of vectors
 #' @export
 countPairs <- function(classi1, classi2, order) {
     .Call(`_scPOP_countPairs`, classi1, classi2, order)

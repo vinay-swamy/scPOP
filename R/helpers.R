@@ -35,9 +35,10 @@ qmessage <- function(msg, quiet){
 #' @param batch_key Name of column in metadata corresponding to batch
 #' @param label1_key Name of column in metadata corresponding to primary cell label, eg Cell type
 #' @param label2_key Name of column in metadata corresponding to secondary cell label, eg cluster identity
-#' @param sil (optional) Name associated with this data.
 #' @param sil_width_prop (optinal) proportion of data to use for silhoette width
 #' @param sil_width_group_key (optinal) which column in metadata to use for stratified sampling of data
+#' @param run_name (optional) name to refer to dataset
+#' @param quietly (optional) if TRUE dont print anything
 #'
 #' @return A subsampled vector generated from indexer
 #' @export

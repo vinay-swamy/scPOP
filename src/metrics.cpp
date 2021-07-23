@@ -81,6 +81,10 @@ arma::vec compute_simpson_index(
     }
     return(simpson);
 }
+//' Count pairs in vectors
+//' @param classi1 first vector to compare
+//' @param classi2 second vector to compare
+//' @param order proper order of vectors
 //' @export
 // [[Rcpp::export]]
 List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order) {
