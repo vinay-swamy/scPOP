@@ -177,7 +177,10 @@ float expected_MI(IntegerVector ni_, IntegerVector n_j) {
 
 }
 
-
+//' get rank of vector
+//' @param classi vector to rank
+//' @export
+// [[Rcpp::export]]
 List getRank(IntegerVector classi){
     int maxi = max(classi);
     int mini = min(classi);

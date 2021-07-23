@@ -10,6 +10,7 @@ Encoding: UTF-8
 LazyData: true
 Imports: 
     Rcpp (>= 1.0.5),
+    Matrix,
     RANN,
     cluster
 LinkingTo: Rcpp, RcppArmadillo

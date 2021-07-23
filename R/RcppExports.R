@@ -11,7 +11,7 @@
 #' @param tol Stop when the score converges to this tolerance.
 #' @export
 compute_simpson_index <- function(D, knn_idx, batch_labels, n_batches, perplexity = 15, tol = 1e-5) {
-    .Call(`_scPOP_compute_simpson_index`, D, knn_idx, batch_labels, n_batches, perplexity, tol)
+    .Call('_scPOP_compute_simpson_index', PACKAGE = 'scPOP', D, knn_idx, batch_labels, n_batches, perplexity, tol)
 }
 
 #' Count pairs in vectors
@@ -20,6 +20,13 @@ compute_simpson_index <- function(D, knn_idx, batch_labels, n_batches, perplexit
 #' @param order proper order of vectors
 #' @export
 countPairs <- function(classi1, classi2, order) {
-    .Call(`_scPOP_countPairs`, classi1, classi2, order)
+    .Call('_scPOP_countPairs', PACKAGE = 'scPOP', classi1, classi2, order)
+}
+
+#' get rank of vector
+#' @param classi vector to rank
+#' @export
+getRank <- function(classi) {
+    .Call('_scPOP_getRank', PACKAGE = 'scPOP', classi)
 }
 

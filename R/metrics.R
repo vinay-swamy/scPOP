@@ -85,7 +85,8 @@ lisi <- function(
 
 ## Borrowed from https://github.com/jchiquet/aricode
 
-
+#' @importFrom Matrix sparseMatrix
+#'
 sortPairs <- function(c1, c2, spMat=FALSE){
     if (anyNA(c1) | anyNA(c2))
         stop("NA are not supported.")

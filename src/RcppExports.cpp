@@ -35,10 +35,22 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// getRank
+List getRank(IntegerVector classi);
+RcppExport SEXP _scPOP_getRank(SEXP classiSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< IntegerVector >::type classi(classiSEXP);
+    rcpp_result_gen = Rcpp::wrap(getRank(classi));
+    return rcpp_result_gen;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
     {"_scPOP_compute_simpson_index", (DL_FUNC) &_scPOP_compute_simpson_index, 6},
     {"_scPOP_countPairs", (DL_FUNC) &_scPOP_countPairs, 3},
+    {"_scPOP_getRank", (DL_FUNC) &_scPOP_getRank, 1},
     {NULL, NULL, 0}
 };
 
