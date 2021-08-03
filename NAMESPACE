@@ -2,7 +2,6 @@
 
 export(ari)
 export(calc_sumZscore)
-export(compute_simpson_index)
 export(lisi)
 export(nmi)
 export(run_all_metrics)
