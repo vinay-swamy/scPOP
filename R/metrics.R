@@ -262,6 +262,7 @@ silhouette_width <- function(reduction, meta.data, keys){
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' library(scPOP)
 #' data(sceiad_subset_data)
 #'
@@ -294,6 +295,7 @@ silhouette_width <- function(reduction, meta.data, keys){
 #'                         )
 #'
 #'  calc_sumZscore(metric_df_list,'batch' )
+#'  }
 calc_sumZscore <- function(metric_df_list, batch_key){
     stopifnot( 'Must have at least two sets of metrics to compare' = length(metric_df_list)>1)
     df <- do.call(rbind, metric_df_list)

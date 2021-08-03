@@ -20,6 +20,7 @@ Aggregate multiple integration metrics across multiple integration runs, ie from
     batch correction algorithms, or different parameters for the same algorithms
 }
 \examples{
+\donttest{
 library(scPOP)
 data(sceiad_subset_data)
 
@@ -52,4 +53,5 @@ metric_df_list <- lapply(integration_data_list, function(x)
                         )
 
  calc_sumZscore(metric_df_list,'batch' )
+ }
 }
