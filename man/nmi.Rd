@@ -19,3 +19,8 @@ a scalar with the normalized mutual information .
 \description{
 A function to compute the NMI between two classifications
 }
+\examples{
+ ## calculate Normalized Mutal Information score for two sets of labels
+ data(sceiad_subset_data)
+ nmi(sceiad_subset_data$CellType_predict, sceiad_subset_data$cluster)
+}

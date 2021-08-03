@@ -1,4 +1,5 @@
 #include "RcppArmadillo.h"
+#include "Rcpp.h"
 // [[Rcpp::depends(RcppArmadillo)]]
 using namespace Rcpp;
 
@@ -24,7 +25,6 @@ float Hbeta(arma::mat& D, float beta, arma::vec& P, int idx) {
 //' @param n_batches The number of categories in the categorical variable.
 //' @param perplexity The effective number of neighbors around each cell.
 //' @param tol Stop when the score converges to this tolerance.
-//' @export
 // [[Rcpp::export]]
 arma::vec compute_simpson_index(
         arma::mat& D,
@@ -81,11 +81,9 @@ arma::vec compute_simpson_index(
     }
     return(simpson);
 }
-//' Count pairs in vectors
-//' @param classi1 first vector to compare
-//' @param classi2 second vector to compare
-//' @param order proper order of vectors
-//' @export
+
+
+
 // [[Rcpp::export]]
 List countPairs(IntegerVector classi1, IntegerVector classi2, IntegerVector order) {
     // first path to count pairs
@@ -177,9 +175,7 @@ float expected_MI(IntegerVector ni_, IntegerVector n_j) {
 
 }
 
-//' get rank of vector
-//' @param classi vector to rank
-//' @export
+
 // [[Rcpp::export]]
 List getRank(IntegerVector classi){
     int maxi = max(classi);

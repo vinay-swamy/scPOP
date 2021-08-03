@@ -29,3 +29,9 @@ A subsampled vector generated from indexer
 \description{
 Use this function to compute LISI scores of one or more labels.
 }
+\examples{
+data(sceiad_subset_data)
+rownames(sceiad_subset_data) <- sceiad_subset_data$Barcode
+res  = stratified_sample(sceiad_subset_data$Barcode, sceiad_subset_data$cluster)
+dim(sceiad_subset_data[res, ])
+}

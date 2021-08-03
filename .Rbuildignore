@@ -1,3 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 README.Rmd
+scEiaD_all_anndata_mini_ref.h5ad
+LICENSE

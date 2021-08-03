@@ -26,37 +26,11 @@ column is a different label variable.
 Use this function to compute LISI scores of one or more labels.
 }
 \examples{
+data(sceiad_subset_data)
+features <- sceiad_subset_data[, paste0('scviDim_', 1:8)]
+metadata <- sceiad_subset_data[,c('Barcode', 'cluster',  'subcluster',
+                                     'CellType', 'CellType_predict')]
+lisi_scores <- lisi(features, metadata, c('CellType_predict'))
+head(lisi_scores)
 
-## Example with 400 cells.
-\dontrun{
-library(lisi)
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-library(magrittr)
-
-head(lisi::meta_data)
-
-## Let's color cells by labels. For label 1, there are mixed and non-mixed
-## groups. For label 2, all cells are well mixed.
-lisi::X \%>\%
-  cbind(lisi::meta_data) \%>\%
-  sample_frac(1L, FALSE) \%>\%
-  gather(key, val, label1, label2) \%>\%
-  ggplot(aes(X1, X2, color = val)) +
-    geom_point(shape = 21) +
-    facet_wrap(~key)
-
-## Now to compute and plot the LISI values for each label.
-lisi_res <- compute_lisi(lisi::X, lisi::meta_data, c('label1', 'label2'))
-head(lisi_res)
-
-lisi::X \%>\%
-  cbind(lisi_res) \%>\%
-  sample_frac(1L, FALSE) \%>\%
-  gather(key, lisi_value, label1, label2) \%>\%
-  ggplot(aes(X1, X2, color = lisi_value)) +
-    geom_point(shape = 21) +
-    facet_wrap(~key)
-}
 }

@@ -29,14 +29,14 @@ run_all_metrics(
 
 \item{run_name}{(optional) name to refer to dataset}
 
-\item{sil_width_prop}{(optinal) proportion of data to use for silhoette width}
+\item{sil_width_prop}{(optional) proportion of data to use for \code{\link{silhouette_width}}}
 
-\item{sil_width_group_key}{(optinal) which column in metadata to use for stratified sampling of data}
+\item{sil_width_group_key}{(optional) which column in metadata to use for stratified sampling of data}
 
 \item{quietly}{(optional) if TRUE dont print anything}
 }
 \value{
-A subsampled vector generated from indexer
+A one row \code{data.frame} of calculated metrics
 }
 \description{
 Running All Metrics

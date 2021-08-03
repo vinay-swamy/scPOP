@@ -10,6 +10,12 @@
 #'
 #' @return A subsampled vector generated from indexer
 #' @export
+#'
+#' @examples
+#' data(sceiad_subset_data)
+#' rownames(sceiad_subset_data) <- sceiad_subset_data$Barcode
+#' res  = stratified_sample(sceiad_subset_data$Barcode, sceiad_subset_data$cluster)
+#' dim(sceiad_subset_data[res, ])
 stratified_sample <- function(indexer, grouping,sample_proportion=.1, min_count=0, seed=424242){
     df <- data.frame(indexer=indexer, label=grouping)
     dfl <- split(df, df$label)
@@ -35,12 +41,12 @@ qmessage <- function(msg, quiet){
 #' @param batch_key Name of column in metadata corresponding to batch
 #' @param label1_key Name of column in metadata corresponding to primary cell label, eg Cell type
 #' @param label2_key Name of column in metadata corresponding to secondary cell label, eg cluster identity
-#' @param sil_width_prop (optinal) proportion of data to use for silhoette width
-#' @param sil_width_group_key (optinal) which column in metadata to use for stratified sampling of data
+#' @param sil_width_prop (optional) proportion of data to use for \code{\link{silhouette_width}}
+#' @param sil_width_group_key (optional) which column in metadata to use for stratified sampling of data
 #' @param run_name (optional) name to refer to dataset
 #' @param quietly (optional) if TRUE dont print anything
 #'
-#' @return A subsampled vector generated from indexer
+#' @return A one row \code{data.frame} of calculated metrics
 #' @export
 run_all_metrics <- function(reduction, metadata, batch_key, label1_key, label2_key, run_name=NULL,
                             sil_width_prop=1, sil_width_group_key=NULL, quietly=F){

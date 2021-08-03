@@ -58,6 +58,30 @@ sce <- zellkonverter::readH5AD('scEiaD_all_anndata_mini_ref.h5ad')
 sce
 ```
 
+```{r, include = F}
+## run this to make example data
+library(tidyverse)
+library()
+column_labels <-  colData(sce) %>% as_tibble %>% select(Barcode, batch, cluster, subcluster, CellType, CellType_predict)
+dimred_data <- reducedDim(sce) %>% as.data.frame %>%  rownames_to_column('Barcode')
+colnames(dimred_data)[-1] <- paste0('scviDim_', 1:8)
+sceiad_subset_data <- inner_join(column_labels, dimred_data) %>% sample_n(10000) %>% as.data.frame
+usethis::use_data(sceiad_subset_data, overwrite = T)
+```
+
+<!-- ```{r include} -->
+<!-- load('sceiad_subet_data.rda') -->
+<!-- features <- sceiad_subet_data[, paste0('scviDim_', 1:8)] -->
+<!-- metadata <- sceiad_subet_data[,c('Barcode', 'cluster',  'subcluster', 'CellType', 'CellType_predict')] -->
+<!-- lisi_scores <- lisi(features, metadata, c('CellType_predict')) -->
+<!-- head(lisi_scores) -->
+
+<!-- ari(sceiad_subet_data$CellType_predict, sceiad_subet_data$cluster) -->
+
+<!-- silhouette_width(features, metadata, 'CellType_predict') -->
+<!-- ``` -->
+
+
 Running scPOP
 
 ```{r}

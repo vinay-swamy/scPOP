@@ -17,3 +17,8 @@ a scalar with the adjusted rand index.
 \description{
 A function to compute the adjusted rand index between two classifications
 }
+\examples{
+## calculate Adjusted Rand Index on two  sets of labels
+data(sceiad_subset_data)
+ari(sceiad_subset_data$CellType_predict, sceiad_subset_data$cluster)
+}

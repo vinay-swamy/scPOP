@@ -23,3 +23,15 @@ The average silhouette width for all clusters.
 Determine batch/bio effect using the silhouette
     coefficient (adopted from scone):
 }
+\examples{
+
+## calculate the the silhoeuette width score on two sets of labels
+## NOTE: this requires computation of a distance matrix, so does not
+##       scale well to large datasets
+data(sceiad_subset_data)
+features <- sceiad_subset_data[, paste0('scviDim_', 1:8)]
+metadata <- sceiad_subset_data[,c('Barcode', 'cluster',
+              'subcluster', 'CellType', 'CellType_predict')]
+silhouette_width(features, metadata, 'CellType_predict')
+
+}
